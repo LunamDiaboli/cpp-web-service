@@ -3,10 +3,15 @@
 
 #include "cpp-web-service.h"
 
-using namespace std;
-
-int main()
+int main(int argc, char** argv)
 {
-	cout << "Hello CMake." << endl;
+	crow::SimpleApp app;
+
+	CROW_ROUTE(app, "/")([]() {
+		return "Hello World!";
+		});
+
+	app.port(8080).multithreaded().run();
+
 	return 0;
 }
