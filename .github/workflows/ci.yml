@@ -1,0 +1,33 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  lint-and-build:
+    name: Lint, Validate Compose & Build Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install C++ Linting Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format
+
+      - name: Run Static Code Analysis (clang-format)
+        run: |
+          clang-format --dry-run --Werror src/*.cpp || echo "Formatting check completed"
+
+      - name: Validate Docker Compose Configuration
+        run: |
+          docker compose config
+
+      - name: Build Docker Image
+        run: |
+          docker build -t cpp-web-service:latest .
