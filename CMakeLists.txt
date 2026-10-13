@@ -11,8 +11,16 @@ endif()
 
 project ("cpp-web-service")
 
+find_package(Crow CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 # Add source to this project's executable.
 add_executable (cpp-web-service "cpp-web-service.cpp" "cpp-web-service.h")
+
+target_link_libraries(cpp-web-service PRIVATE 
+    Crow::Crow 
+    nlohmann_json::nlohmann_json
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET cpp-web-service PROPERTY CXX_STANDARD 20)
