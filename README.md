@@ -21,8 +21,28 @@
 
 | Ендпоінт | HTTP Метод | Статус | Опис / JSON-структура |
 | :--- | :---: | :---: | :--- |
-| `/healthz/live` | `GET` | `200 OK` | **Liveness Probe** — перевірка виконання процесу.<br>```json\n{\n  "status": "alive",\n  "timestamp": "2026-10-14T14:00:00Z"\n}\n``` |
-| `/healthz/ready` | `GET` | `200 OK` | **Readiness Probe** — готовність обробляти трафік.<br>```json\n{\n  "status": "ready",\n  "database": "not_connected_yet",\n  "timestamp": "2026-10-14T14:00:00Z"\n}\n``` |
+| `/healthz/live` | `GET` | `200 OK` | **Liveness Probe** — перевірка виконання процесу застосунку |
+| `/healthz/ready` | `GET` | `200 OK` | **Readiness Probe** — перевірка готовністі обробляти трафік |
+
+
+Приклади JSON-відповідей:
+
+* **GET `/healthz/live`**
+  ```json
+  {
+    "status": "alive",
+    "timestamp": "2026-10-14T15:00:00Z"
+  }
+  ```
+
+  * **GET `/healthz/live`**
+  ```json
+  {
+    "status": "ready",
+    "database": "not_connected_yet",
+    "timestamp": "2026-10-14T15:00:00Z"
+  }
+  ```
 
 ---
 
@@ -34,7 +54,7 @@
 1. Клонування репозиторію
 
 ```bash
-git clone [https://github.com/ваше-ім'я-користувача/cpp-web-service.git](https://github.com/ваше-ім'я-користувача/cpp-web-service.git)
+git clone https://github.com/ваше-ім'я-користувача/cpp-web-service.git
 cd cpp-web-service
 ```
 
@@ -47,6 +67,7 @@ docker compose up --build
 3. Для перевірки роботи сервісу перейдіть за адресами
 
 http://localhost:8080/healthz/live
+
 http://localhost:8080/healthz/ready
 
 4. Зупинити контейнери
